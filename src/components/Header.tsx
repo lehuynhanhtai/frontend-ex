@@ -6,9 +6,11 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Badge } from "@mui/material";
 import Link from "next/link";
 import Shoping_Cart from "@/app/_components/Shoping_Cart";
+import { useCart } from "@/context/CartContext";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
+  const { cartCount } = useCart();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -57,7 +59,7 @@ const Header = () => {
             borderRadius: 2,
           }}
         >
-          <Badge badgeContent={3} color="primary">
+          <Badge badgeContent={cartCount} color="primary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>

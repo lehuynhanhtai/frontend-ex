@@ -1,22 +1,10 @@
 "use client";
 
-import {
-  IconButton,
-  Typography,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Box,
-  Stack,
-  Button,
-  ListItemIcon,
-  Divider,
-} from "@mui/material";
+import { IconButton, Typography, Drawer, Box, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import Image from "next/image";
+import { useCart } from "@/context/CartContext";
 
 const Shoping_Cart = ({
   open,
@@ -25,6 +13,7 @@ const Shoping_Cart = ({
   open: boolean;
   toggleDrawer: any;
 }) => {
+  const { cartItems, updateQuantity, cartTotal } = useCart();
   return (
     <Drawer
       anchor="right"
@@ -74,77 +63,118 @@ const Shoping_Cart = ({
         >
           <Box
             sx={{
+              flexGrow: 1,
+              overflowY: "auto",
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              border: "1px solid #ccc",
-              borderRadius: 1,
-              padding: 1,
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Image
-                  src="https://picsum.photos/200/300"
-                  alt="name"
-                  width={200}
-                  height={200}
-                  style={{
-                    borderRadius: 3,
-                    objectFit: "cover",
-                    minWidth: "100px",
-                    height: "100px",
+            {cartItems.map((item) => (
+              <Box
+                key={item.id}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  border: "1px solid #ccc",
+                  borderRadius: 1,
+                  padding: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
-                />
-                <Box sx={{ mr: 2 }}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontWeight: "bold",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    name kaf skfjai aksffuaisf jasfh asifh asfashfas
-                    jfashfasuifhsf sf sfs fs fsfhasuifask asfa sfhas hasf haskfh
-                    aksf
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    description
+                >
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={200}
+                      height={200}
+                      style={{
+                        borderRadius: 3,
+                        objectFit: "cover",
+                        minWidth: "100px",
+                        height: "100px",
+                      }}
+                    />
+                    <Box sx={{ mr: 2 }}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: "bold",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.description}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    >
+                      -
+                    </Button>
+
+                    <Typography
+                      sx={{
+                        textAlign: "center",
+                        minWidth: "20px",
+                      }}
+                    >
+                      X{item.quantity}
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      +
+                    </Button>
+                  </Box>
+                  <Typography variant="body1">
+                    {item.price * item.quantity}$
                   </Typography>
                 </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Button variant="outlined">+</Button>
-                <Typography
-                  sx={{
-                    textAlign: "center",
-                    minWidth: "20px",
-                  }}
-                >
-                  1
-                </Typography>
-                <Button variant="outlined">-</Button>
-              </Box>
-              <Typography variant="body1">123$</Typography>
-            </Box>
+            ))}
+            {cartItems.length === 0 && (
+              <Typography
+                sx={{ textAlign: "center", mt: 4, color: "text.secondary" }}
+              >
+                Your cart is empty
+              </Typography>
+            )}
           </Box>
+          {cartItems.length > 0 && (
+            <Box
+              sx={{ py: 2, display: "flex", justifyContent: "space-between" }}
+            >
+              <Typography variant="h6">Total:</Typography>
+              <Typography variant="h6" fontWeight="bold">
+                {cartTotal}$
+              </Typography>
+            </Box>
+          )}
 
           <Button
             variant="contained"

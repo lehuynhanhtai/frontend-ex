@@ -12,10 +12,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useEffect, useState } from "react";
 import { fetchProducts } from "@/api/fetch";
 import { Product } from "@/interface";
+import { useCart } from "@/context/CartContext";
 
 export default function MultiActionAreaCard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -84,7 +91,12 @@ export default function MultiActionAreaCard() {
             <Typography variant="body2" sx={{ color: "red" }}>
               Price: {items.price}
             </Typography>
-            <Button size="small" color="success" variant="contained">
+            <Button
+              size="small"
+              color="success"
+              variant="contained"
+              onClick={() => handleAddToCart(items)}
+            >
               Add to Cart
             </Button>
           </CardActions>
