@@ -7,25 +7,60 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useEffect, useState } from "react";
 import { fetchProducts } from "@/api/fetch";
 import { Product } from "@/interface";
 
 export default function MultiActionAreaCard() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProducts = async () => {
-      const res = await fetchProducts();
-      setProducts(res.data);
+      try {
+        const res = await fetchProducts();
+        if (res && res.data) {
+          setProducts(res.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      } finally {
+        setLoading(false);
+      }
     };
     getProducts();
   }, []);
 
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "50vh",
+          width: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-20">
       {products?.map((items: Product) => (
-        <Card sx={{ width: "100%" }} key={items.id}>
+        <Card
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+          key={items.id}
+        >
           <CardActionArea>
             <CardMedia
               component="img"
@@ -43,12 +78,12 @@ export default function MultiActionAreaCard() {
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 {items.description}
               </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                {items.price}
-              </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions sx={{ justifyContent: "flex-end" }}>
+          <CardActions sx={{ justifyContent: "space-between" }}>
+            <Typography variant="body2" sx={{ color: "red" }}>
+              Price: {items.price}
+            </Typography>
             <Button size="small" color="success" variant="contained">
               Add to Cart
             </Button>
