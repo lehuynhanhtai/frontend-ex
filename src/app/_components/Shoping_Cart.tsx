@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
+import Image from "next/image";
 
 const Shoping_Cart = ({
   open,
@@ -37,7 +38,7 @@ const Shoping_Cart = ({
     >
       <Box
         sx={{
-          width: { xs: "100vw", sm: 400 },
+          width: { xs: "100vw", sm: 500 },
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -62,45 +63,89 @@ const Shoping_Cart = ({
           </IconButton>
         </Box>
 
-        <List sx={{ flexGrow: 1, pt: 1 }}>
-          {["Product 1", "Product 2", "Product 3"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton sx={{ py: 2 }}>
-                <ListItemIcon sx={{ minWidth: 40 }}>
-                  <Box
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "100%",
+            p: 2,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              border: "1px solid #ccc",
+              borderRadius: 1,
+              padding: 1,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Image
+                  src="https://picsum.photos/200/300"
+                  alt="name"
+                  width={200}
+                  height={200}
+                  style={{
+                    borderRadius: 3,
+                    objectFit: "cover",
+                    minWidth: "100px",
+                    height: "100px",
+                  }}
+                />
+                <Box sx={{ mr: 2 }}>
+                  <Typography
+                    variant="body1"
                     sx={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 1,
-                      bgcolor: "primary.main",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "white",
-                      fontSize: "1.2rem",
-                      mr: 2,
+                      fontWeight: "bold",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
                     }}
                   >
-                    {index + 1}
-                  </Box>
-                </ListItemIcon>
-                <ListItemText primary={text} secondary="$99.00" />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+                    name kaf skfjai aksffuaisf jasfh asifh asfashfas
+                    jfashfasuifhsf sf sfs fs fsfhasuifask asfa sfhas hasf haskfh
+                    aksf
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    description
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Button variant="outlined">+</Button>
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    minWidth: "20px",
+                  }}
+                >
+                  1
+                </Typography>
+                <Button variant="outlined">-</Button>
+              </Box>
+              <Typography variant="body1">123$</Typography>
+            </Box>
+          </Box>
 
-        <Divider />
-
-        <Box sx={{ p: 3, bgcolor: "white" }}>
-          <Stack direction="row" justifyContent="space-between" mb={2}>
-            <Typography variant="subtitle1" color="text.secondary">
-              Total
-            </Typography>
-            <Typography variant="h6" fontWeight="bold">
-              $297.00
-            </Typography>
-          </Stack>
           <Button
             variant="contained"
             size="large"
