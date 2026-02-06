@@ -14,47 +14,16 @@ import { fetchProducts } from "@/api/fetch";
 import { Product } from "@/interface";
 import { useCart } from "@/context/CartContext";
 
-export default function MultiActionAreaCard() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-
+export default function MultiActionAreaCard({
+  products,
+}: {
+  products: Product[];
+}) {
   const { addToCart } = useCart();
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
   };
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await fetchProducts();
-        if (res && res.data) {
-          setProducts(res.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getProducts();
-  }, []);
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "50vh",
-          width: "100%",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-20">
