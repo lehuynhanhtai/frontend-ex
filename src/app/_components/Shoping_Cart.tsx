@@ -98,8 +98,10 @@ const Shoping_Cart = ({
                       style={{
                         borderRadius: 3,
                         objectFit: "cover",
-                        minWidth: "100px",
-                        height: "100px",
+                        width: "100px", // fixed rendered width
+                        height: "100px", // fixed rendered height
+                        minWidth: "100px", // prevents shrinking
+                        flexShrink: 0, // prevents flex container from squishing it
                       }}
                     />
                     <Box sx={{ mr: 2 }}>

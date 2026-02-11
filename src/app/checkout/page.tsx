@@ -102,8 +102,8 @@ const CheckoutPage = () => {
 
   return (
     <Container maxWidth="xl">
-      <Grid container spacing={2}>
-        <Grid size={7} sx={{ pr: 5 }}>
+      <Grid container spacing={4}>
+        <Grid size={{ xs: 12, md: 7 }}>
           <Typography
             variant="h4"
             sx={{
@@ -216,14 +216,21 @@ const CheckoutPage = () => {
           <Button
             variant="contained"
             color="primary"
-            sx={{ mt: 2, width: "100%" }}
+            sx={{
+              mt: 2,
+              width: "100%",
+              height: "50px",
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+              borderRadius: 4,
+            }}
             onClick={handleCheckout}
             disabled={isLoading}
           >
             {isLoading ? "Processing..." : "Checkout"}
           </Button>
         </Grid>
-        <Grid size={5}>
+        <Grid size={{ xs: 12, md: 5 }}>
           <Typography
             variant="h4"
             sx={{
@@ -268,8 +275,10 @@ const CheckoutPage = () => {
                       style={{
                         borderRadius: 3,
                         objectFit: "cover",
-                        minWidth: "100px",
-                        height: "100px",
+                        width: "150px", // fixed rendered width
+                        height: "150px", // fixed rendered height
+                        minWidth: "150px", // prevents shrinking
+                        flexShrink: 0, // prevents flex container from squishing it
                       }}
                     />
                     <Box sx={{ mr: 2 }}>
